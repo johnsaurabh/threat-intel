@@ -2,7 +2,7 @@
 
 # Threat Intel Feed
 
-**Personal CVE intelligence system — built for security engineers, not news readers.**
+**Personal CVE intelligence system built for security engineers, not news readers.**
 
 [![Live](https://img.shields.io/badge/Live-johnsaurabh.com%2Fthreat--intel-00ff9f?style=flat-square)](https://johnsaurabh.com/threat-intel)
 [![Stack](https://img.shields.io/badge/Stack-React%20·%20TypeScript%20·%20Supabase-0A66C2?style=flat-square)](https://github.com/johnsaurabh/threat-intel)
@@ -14,9 +14,9 @@
 
 ## What This Is
 
-Most CVE feeds are noise. The NVD dumps hundreds of entries a day. Aggregators rank by CVSS alone, which is a bad signal — a CVSS 10 in OT/ICS firmware is not the same threat as a CVSS 10 in a widely-deployed web server with a public PoC and active KEV listing.
+Most CVE feeds are noise. The NVD dumps hundreds of entries a day. Aggregators rank by CVSS alone, which is a bad signal. A CVSS 10 in OT/ICS firmware is not the same threat as a CVSS 10 in a widely-deployed web server with a public PoC and active KEV listing.
 
-This is a personal threat intelligence interface built around a 5-tier classification system, real EPSS scores, CISA KEV tracking, PoC availability, and an AI enrichment pipeline that generates attack narratives, MITRE ATT&CK mappings, interview-style questions, and novelty scores per CVE — automatically.
+This is a personal threat intelligence interface built around a 5-tier classification system, real EPSS scores, CISA KEV tracking, PoC availability, and an AI enrichment pipeline that generates attack narratives, MITRE ATT&CK mappings, interview-style questions, and novelty scores per CVE, all generated automatically.
 
 It's the feed I actually use to stay current on the vulnerability landscape.
 
@@ -40,35 +40,35 @@ CVEs are classified into 5 tiers, not ranked by CVSS alone:
 T0 CVEs trigger a red border pulse across the entire interface. You notice.
 
 ### Live Feed + Hall of Fame
-Two tabs. The **Live Feed** is the current threat landscape — updated by a Lambda pipeline, auto-refreshed in the UI every 5 minutes on tab focus. The **Hall of Fame** is a curated set of historically significant CVEs organized by category: RCE, Memory Corruption, Auth Bypass, Crypto & Network, Supply Chain, Injection, LPE. These are the CVEs worth understanding deeply — EternalBlue, Log4Shell, Heartbleed, and their successors.
+Two tabs. The **Live Feed** is the current threat landscape, updated by a Lambda pipeline and auto-refreshed in the UI every 5 minutes on tab focus. The **Hall of Fame** is a curated set of historically significant CVEs organized by category: RCE, Memory Corruption, Auth Bypass, Crypto & Network, Supply Chain, Injection, LPE. These are the CVEs worth understanding deeply: EternalBlue, Log4Shell, Heartbleed, and their successors.
 
 ### AI Enrichment Pipeline
 Each CVE is enriched by a Lambda pipeline that populates:
-- **Attack Narrative** — plain-language explanation of how exploitation works
-- **Root Cause** — the underlying vulnerability class and why it exists
-- **Exploit Technique** — the specific mechanism (e.g. heap spray, type confusion, UAF)
-- **MITRE ATT&CK Techniques** — clickable links to the MITRE technique pages
-- **Similar CVEs** — related vulnerabilities worth cross-referencing (clickable, loads the related CVE inline)
-- **Real-World Incidents** — documented cases where this was exploited in the wild
-- **Exploitation Timeline** — from disclosure to weaponized exploit
-- **Patch / Mitigation** — what to do about it
-- **Detection Signatures** — log patterns and SIEM rules for catching active exploitation
-- **Interview Questions** — the questions this CVE would generate in a security engineering interview
-- **Key Concepts** — prerequisite knowledge to understand the vulnerability
-- **Prevention Pattern** — the architectural fix, not just the patch
-- **Novelty Score** — 1–10 rating of how novel the technique is (vs known exploitation patterns)
-- **Chaining Potential** — what other vulnerabilities this chains well with
+- **Attack Narrative**: plain-language explanation of how exploitation works
+- **Root Cause**: the underlying vulnerability class and why it exists
+- **Exploit Technique**: the specific mechanism (e.g. heap spray, type confusion, UAF)
+- **MITRE ATT&CK Techniques**: clickable links to the MITRE technique pages
+- **Similar CVEs**: related vulnerabilities worth cross-referencing (clickable, loads the related CVE inline)
+- **Real-World Incidents**: documented cases where this was exploited in the wild
+- **Exploitation Timeline**: from disclosure to weaponized exploit
+- **Patch / Mitigation**: what to do about it
+- **Detection Signatures**: log patterns and SIEM rules for catching active exploitation
+- **Interview Questions**: the questions this CVE would generate in a security engineering interview
+- **Key Concepts**: prerequisite knowledge to understand the vulnerability
+- **Prevention Pattern**: the architectural fix, not just the patch
+- **Novelty Score**: 1–10 rating of how novel the technique is vs known exploitation patterns
+- **Chaining Potential**: what other vulnerabilities this chains well with
 
 ### Study Queue
 Every CVE has a toggle — mark it as studied. State is persisted in localStorage, private to your browser. The stat bar tracks studied / total. When every CVE in a tier is studied, the count turns green.
 
 ### Filter System
 - **Full-text search** across CVE ID, affected software, and metadata
-- **Tier filter** — multi-select, show only T0+T1 if that's all you have time for
-- **Ecosystem filter** — Windows, Linux Kernel, Browser, Cloud, Network Infra, Enterprise Software, Open Source, Mobile, Container/K8s, OT/ICS
-- **Vulnerability type filter** — RCE, LPE, Auth Bypass, Memory Corruption, Injection, Deserialization, SSRF, Crypto, Supply Chain, Logic Flaw
-- **KEV only** — show only confirmed exploited vulnerabilities
-- **Unstudied only** — show only what you haven't reviewed yet
+- **Tier filter**: multi-select, show only T0+T1 if that's all you have time for
+- **Ecosystem filter**: Windows, Linux Kernel, Browser, Cloud, Network Infra, Enterprise Software, Open Source, Mobile, Container/K8s, OT/ICS
+- **Vulnerability type filter**: RCE, LPE, Auth Bypass, Memory Corruption, Injection, Deserialization, SSRF, Crypto, Supply Chain, Logic Flaw
+- **KEV only**: show only confirmed exploited vulnerabilities
+- **Unstudied only**: show only what you haven't reviewed yet
 - Active filters render as removable chips below the filter bar
 
 ---
@@ -159,13 +159,13 @@ interface CVE {
 
 **Auto-refresh on visibility.** The `useCVEFeed` hook listens for `visibilitychange` events. When you tab back in after 5+ minutes, it silently re-fetches. No polling, no timers.
 
-**Drawer animation.** The feed column animates its right margin when the drawer opens, using Framer Motion's spring physics — the feed doesn't snap, it shifts. On mobile the drawer slides up as a full-screen sheet with a backdrop.
+**Drawer animation.** The feed column animates its right margin when the drawer opens, using Framer Motion's spring physics. The feed doesn't snap, it shifts. On mobile the drawer slides up as a full-screen sheet with a backdrop.
 
-**Study queue in localStorage.** No backend for study state — it's private by definition. `useStudyQueue` serializes a `Set<string>` to localStorage under `jsb_study_queue`. Works across refreshes, zero server cost.
+**Study queue in localStorage.** No backend for study state. It's private by definition. `useStudyQueue` serializes a `Set<string>` to localStorage under `jsb_study_queue`. Works across refreshes, zero server cost.
 
-**Filter chips.** The `FilterBar` maintains a derived `activeChips` array from the current filter state. Each chip has its own `onRemove` handler — removing a tier chip removes only that tier, not all filters.
+**Filter chips.** The `FilterBar` maintains a derived `activeChips` array from the current filter state. Each chip has its own `onRemove` handler. Removing a tier chip removes only that tier, not all filters.
 
-**Novelty scoring.** `KnowledgeAnchors` renders a `NoveltyBar` — a simple progress-bar visualization of the AI-assigned novelty score. Color transitions at 5 (orange) and 8 (red) for novel vs known techniques.
+**Novelty scoring.** `KnowledgeAnchors` renders a `NoveltyBar`, a simple progress-bar visualization of the AI-assigned novelty score. Color transitions at 5 (orange) and 8 (red) for novel vs known techniques.
 
 ---
 
@@ -218,7 +218,7 @@ src/
 
 ## Part of personal-os
 
-This is extracted from [johnsaurabh/personal-os](https://github.com/johnsaurabh/personal-os) — a macOS-style portfolio built as a full React application. The threat intel feed is one of two dedicated sub-pages accessible from the main OS dock.
+This is extracted from [johnsaurabh/personal-os](https://github.com/johnsaurabh/personal-os) — a macOS-style portfolio built as a full React application. The threat intel feed is one of two dedicated sub-pages in the main OS dock.
 
 The full personal OS is live at [johnsaurabh.com](https://johnsaurabh.com).
 
