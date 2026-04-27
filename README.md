@@ -60,7 +60,7 @@ Each CVE is enriched by a Lambda pipeline that populates:
 - **Chaining Potential**: what other vulnerabilities this chains well with
 
 ### Study Queue
-Every CVE has a toggle — mark it as studied. State is persisted in localStorage, private to your browser. The stat bar tracks studied / total. When every CVE in a tier is studied, the count turns green.
+Every CVE has a toggle to mark it as studied. State is persisted in localStorage, private to your browser. The stat bar tracks studied / total. When every CVE in a tier is studied, the count turns green.
 
 ### Filter System
 - **Full-text search** across CVE ID, affected software, and metadata
@@ -218,7 +218,7 @@ src/
 
 ## Part of personal-os
 
-This is extracted from [johnsaurabh/personal-os](https://github.com/johnsaurabh/personal-os) — a macOS-style portfolio built as a full React application. The threat intel feed is one of two dedicated sub-pages in the main OS dock.
+This is extracted from [johnsaurabh/personal-os](https://github.com/johnsaurabh/personal-os), a macOS-style portfolio built as a full React application. The threat intel feed is one of two dedicated sub-pages in the main OS dock.
 
 The full personal OS is live at [johnsaurabh.com](https://johnsaurabh.com).
 
